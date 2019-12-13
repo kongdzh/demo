@@ -15,7 +15,7 @@ import java.util.List;
 @Repository("accountDao")
 public class AccountDaoImpl implements IAccountDao {
 
-    @Resource
+    @Resource(name = "queryRunner")
     private QueryRunner queryRunner;
 
     public List<Account> findAllAccount() {

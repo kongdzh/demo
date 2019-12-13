@@ -3,15 +3,15 @@ package com.wonders.beans;
 import java.io.Serializable;
 
 public class Account implements Serializable {
-    private int id;
+    private Integer id;
     private String name;
-    private float money;
+    private Float money;
 
-    public int getId() {
+    public Integer getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(Integer id) {
         this.id = id;
     }
 
@@ -23,11 +23,11 @@ public class Account implements Serializable {
         this.name = name;
     }
 
-    public float getMoney() {
+    public Float getMoney() {
         return money;
     }
 
-    public void setMoney(float money) {
+    public void setMoney(Float money) {
         this.money = money;
     }
 

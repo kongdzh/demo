@@ -8,7 +8,7 @@ import org.springframework.stereotype.Service;
 import javax.annotation.Resource;
 import java.util.List;
 
-@Service
+@Service("accountService")
 public class AccountServiceImpl implements IAccountService {
 
     @Resource(name = "accountDao")
