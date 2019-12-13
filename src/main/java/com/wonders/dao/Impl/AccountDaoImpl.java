@@ -37,6 +37,7 @@ public class AccountDaoImpl implements IAccountDao {
     public void saveAccount(Account account) {
         try {
             queryRunner.update("insert into account(name, money) values(?, ?)", account.getName(), account.getMoney());
+            System.out.println("保存成功");
         } catch (Exception e) {
             throw new RuntimeException(e);
         }

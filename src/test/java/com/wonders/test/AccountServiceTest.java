@@ -13,13 +13,22 @@ import java.util.List;
 public class AccountServiceTest {
 
     ApplicationContext applicationContext = new AnnotationConfigApplicationContext(SpringConfiguration.class);
+    AccountServiceImpl accountService = (AccountServiceImpl) applicationContext.getBean("accountService");
 
     @Test
     public void testFindAll() {
-        AccountServiceImpl accountService = (AccountServiceImpl) applicationContext.getBean("accountService");
         List<Account> accountList = accountService.findAllAccount();
         for (Account a : accountList) {
             System.out.println(a);
         }
+    }
+
+    @Test
+    public void testSave() {
+        Account account = new Account();
+        account.setName("test");
+        account.setMoney(20000f);
+
+        accountService.saveAccount(account);
     }
 }
