@@ -30,4 +30,9 @@ public interface IAccountService {
     删除
      */
     void deleteAccount(Account account);
+
+    /*
+    转账
+     */
+    void transfer(String sourceName, String targetName, Float money);
 }

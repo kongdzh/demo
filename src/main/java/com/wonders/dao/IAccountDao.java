@@ -30,4 +30,6 @@ public interface IAccountDao {
     删除
      */
     void deleteAccount(Account account);
+
+    Account findAccountByName(String accountName);
 }
