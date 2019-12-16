@@ -37,4 +37,11 @@ public class ConnectionUtils {
         }
         return connection;
     }
+
+    /**
+     * 把连接和线程解绑，避免连接、线程关闭后再启动线程时，仍然存在连接，但此连接不工作。
+     */
+    public void removeConnection() {
+        tl.remove();
+    }
 }

@@ -3,6 +3,7 @@ package com.wonders.service.Impl;
 import com.wonders.beans.Account;
 import com.wonders.dao.Impl.AccountDaoImpl;
 import com.wonders.service.IAccountService;
+import com.wonders.utils.TransactionManager;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
@@ -14,8 +15,28 @@ public class AccountServiceImpl implements IAccountService {
     @Resource(name = "accountDao")
     private AccountDaoImpl accountDao;
 
+    @Resource(name = "txManager")
+    private TransactionManager transactionManager;
+
     public List<Account> findAllAccount() {
-        return accountDao.findAllAccount();
+        try {
+            //1、开启事务
+            transactionManager.beginTransaction();
+            //2、执行操作
+            List<Account> accounts = accountDao.findAllAccount();
+            //3、提交事务
+            transactionManager.commit();
+            //4、返回结果
+            return accounts;
+        }catch (Exception e){
+            //5、回滚操作
+            transactionManager.rollback();
+            throw new RuntimeException(e);
+        }finally {
+            //6、释放连接
+            transactionManager.release();
+        }
+        //return accountDao.findAllAccount();
     }
 
     public Account findAccountById(Integer id) {
