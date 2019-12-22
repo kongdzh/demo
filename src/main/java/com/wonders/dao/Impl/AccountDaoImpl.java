@@ -2,6 +2,7 @@ package com.wonders.dao.Impl;
 
 import com.wonders.beans.Account;
 import com.wonders.dao.IAccountDao;
+import com.wonders.utils.ConnectionUtils;
 import org.apache.commons.dbutils.QueryRunner;
 import org.apache.commons.dbutils.handlers.BeanHandler;
 import org.apache.commons.dbutils.handlers.BeanListHandler;
@@ -18,9 +19,12 @@ public class AccountDaoImpl implements IAccountDao {
     @Resource(name = "queryRunner")
     private QueryRunner queryRunner;
 
+    @Resource(name = "connectionUtils")
+    private ConnectionUtils connectionUtils;
+
     public List<Account> findAllAccount() {
         try {
-            return queryRunner.query("select * from account", new BeanListHandler<Account>(Account.class));
+            return queryRunner.query(connectionUtils.getThreadConnection(),"select * from account", new BeanListHandler<Account>(Account.class));
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
@@ -28,7 +32,7 @@ public class AccountDaoImpl implements IAccountDao {
 
     public Account findAccountById(Integer id) {
         try {
-            return queryRunner.query("select * from account where id = ?", new BeanHandler<Account>(Account.class), id);
+            return queryRunner.query(connectionUtils.getThreadConnection(),"select * from account where id = ?", new BeanHandler<Account>(Account.class), id);
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
@@ -36,7 +40,7 @@ public class AccountDaoImpl implements IAccountDao {
 
     public void saveAccount(Account account) {
         try {
-            queryRunner.update("insert into account(name, money) values(?, ?)", account.getName(), account.getMoney());
+            queryRunner.update(connectionUtils.getThreadConnection(),"insert into account(name, money) values(?, ?)", account.getName(), account.getMoney());
             System.out.println("保存成功");
         } catch (Exception e) {
             throw new RuntimeException(e);
@@ -45,7 +49,7 @@ public class AccountDaoImpl implements IAccountDao {
 
     public void updateAccount(Account account) {
         try {
-            queryRunner.update("update account set name=?, money=? where id=?", account.getName(), account.getMoney(), account.getId());
+            queryRunner.update(connectionUtils.getThreadConnection(),"update account set name=?, money=? where id=?", account.getName(), account.getMoney(), account.getId());
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
@@ -53,7 +57,7 @@ public class AccountDaoImpl implements IAccountDao {
 
     public void deleteAccount(Account account) {
         try {
-            queryRunner.update("delete from account where id=?", account.getId());
+            queryRunner.update(connectionUtils.getThreadConnection(),"delete from account where id=?", account.getId());
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
@@ -61,7 +65,7 @@ public class AccountDaoImpl implements IAccountDao {
 
     public Account findAccountByName(String accountName) {
         try {
-            List<Account> accounts = queryRunner.query("select * from account where name = ?", new BeanListHandler<Account>(Account.class), accountName);
+            List<Account> accounts = queryRunner.query(connectionUtils.getThreadConnection(),"select * from account where name = ?", new BeanListHandler<Account>(Account.class), accountName);
             if (accounts.size() == 0 || accounts == null) {
                 return null;
             }

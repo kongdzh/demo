@@ -3,6 +3,7 @@ package com.wonders.utils;
 import org.springframework.context.annotation.Bean;
 import org.springframework.stereotype.Component;
 
+import javax.annotation.Resource;
 import java.sql.SQLException;
 
 /**
@@ -11,11 +12,12 @@ import java.sql.SQLException;
 @Component(value = "txManager")
 public class TransactionManager {
 
+    @Resource(name = "connectionUtils")
     private ConnectionUtils connectionUtils;
 
-    public void setConnectionUtils(ConnectionUtils connectionUtils) {
-        this.connectionUtils = connectionUtils;
-    }
+//    public void setConnectionUtils(ConnectionUtils connectionUtils) {
+//        this.connectionUtils = connectionUtils;
+//    }
 
     /**
      * 获取连接

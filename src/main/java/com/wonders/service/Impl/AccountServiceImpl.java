@@ -26,14 +26,17 @@ public class AccountServiceImpl implements IAccountService {
             List<Account> accounts = accountDao.findAllAccount();
             //3、提交事务
             transactionManager.commit();
+            int error = 1/0;
             //4、返回结果
             return accounts;
         }catch (Exception e){
             //5、回滚操作
             transactionManager.rollback();
+            System.out.println("进入回滚");
             throw new RuntimeException(e);
         }finally {
             //6、释放连接
+            System.out.println("释放连接");
             transactionManager.release();
         }
         //return accountDao.findAllAccount();
