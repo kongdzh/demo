@@ -1,6 +1,7 @@
 package com.wonders.test;
 
 import com.wonders.beans.Account;
+import com.wonders.service.IAccountService;
 import com.wonders.service.Impl.AccountServiceImpl;
 import config.SpringConfiguration;
 import javafx.application.Application;
@@ -16,11 +17,13 @@ public class AccountServiceTest {
 
     private ApplicationContext applicationContext;
     private AccountServiceImpl accountService;
+    private IAccountService iAccountService;
 
     @Before
     public void init() {
         applicationContext = new AnnotationConfigApplicationContext(SpringConfiguration.class);
-        accountService = (AccountServiceImpl) applicationContext.getBean("accountService");
+        //accountService = (AccountServiceImpl) applicationContext.getBean("accountService");
+        iAccountService = (IAccountService) applicationContext.getBean("accountService");
     }
 
 //    private ApplicationContext applicationContext = new AnnotationConfigApplicationContext(SpringConfiguration.class);
@@ -46,5 +49,11 @@ public class AccountServiceTest {
     @Test
     public void testTransfer() {
         accountService.transfer("aaa", "bbb", 100f);
+    }
+
+    @Test
+    public void testFindById() {
+        Account account = iAccountService.findAccountById(1);
+        System.out.println(account.getName());
     }
 }

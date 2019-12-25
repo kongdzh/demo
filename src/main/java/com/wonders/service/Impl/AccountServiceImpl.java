@@ -4,6 +4,7 @@ import com.wonders.beans.Account;
 import com.wonders.dao.Impl.AccountDaoImpl;
 import com.wonders.service.IAccountService;
 import com.wonders.utils.TransactionManager;
+import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
@@ -26,7 +27,6 @@ public class AccountServiceImpl implements IAccountService {
             List<Account> accounts = accountDao.findAllAccount();
             //3、提交事务
             transactionManager.commit();
-            int error = 1/0;
             //4、返回结果
             return accounts;
         }catch (Exception e){

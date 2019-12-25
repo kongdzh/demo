@@ -20,18 +20,19 @@ import java.beans.PropertyVetoException;
  *                  属性: value   关键字：classpath 表示类路径下
  */
 @Configuration
+@EnableAspectJAutoProxy
 @ComponentScan({"com.wonders", "config"})
 @PropertySource("classpath:jdbcConfig.properties")
 @Import(JdbcConfiguration.class)
 public class SpringConfiguration {
     /**
      *
-     * @param dataSource
+     * @param
      * @return
      */
     @Bean(name = "queryRunner")
     @Scope("prototype") //多例的
-    public QueryRunner createQueryRunner(DataSource dataSource) {
-        return new QueryRunner(dataSource);
+    public QueryRunner createQueryRunner() {
+        return new QueryRunner();
     }
 }
